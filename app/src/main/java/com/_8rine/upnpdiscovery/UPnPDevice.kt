@@ -24,7 +24,7 @@ class UPnPDevice internal constructor(val hostAddress: String, header: String) {
     private var modelName: String = ""
     private var modelNumber: String = ""
     private var modelURL: String = ""
-    private var manufacturer: String = ""
+    var manufacturer: String = ""
     private var manufacturerURL: String = ""
     private var udn: String = ""
     private var urlBase: String = ""

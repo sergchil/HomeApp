@@ -2,18 +2,21 @@ package io.github.domi04151309.home.activities
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
-import android.widget.*
-import androidx.appcompat.app.AlertDialog
 import android.view.View
+import android.widget.AdapterView
+import android.widget.ListView
+import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import io.github.domi04151309.home.R
+import io.github.domi04151309.home.adapters.ListViewAdapter
 import io.github.domi04151309.home.data.DeviceItem
 import io.github.domi04151309.home.data.ListViewItem
 import io.github.domi04151309.home.helpers.Devices
-import io.github.domi04151309.home.adapters.ListViewAdapter
 import io.github.domi04151309.home.helpers.Global
 import io.github.domi04151309.home.helpers.Theme
+
 
 class DevicesActivity : AppCompatActivity() {
 
@@ -30,7 +33,7 @@ class DevicesActivity : AppCompatActivity() {
         listView = findViewById<View>(R.id.listView) as ListView
 
         listView.onItemClickListener = AdapterView.OnItemClickListener { _, view, pos, _ ->
-            val action =  view.findViewById<TextView>(R.id.hidden).text
+            val action = view.findViewById<TextView>(R.id.hidden).text
             if (action == "edit") {
                 reset = true
                 startActivity(Intent(this, EditDeviceActivity::class.java).putExtra("deviceId", devices.getDeviceByIndex(pos).id))
@@ -50,7 +53,8 @@ class DevicesActivity : AppCompatActivity() {
         }
     }
 
-    private fun loadDevices(){
+
+    private fun loadDevices() {
         val listItems: ArrayList<ListViewItem> = ArrayList(devices.length())
         try {
             if (devices.length() == 0) {
@@ -91,7 +95,7 @@ class DevicesActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        if (reset){
+        if (reset) {
             loadDevices()
             reset = false
         }

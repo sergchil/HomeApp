@@ -29,6 +29,14 @@ class Devices constructor(context: Context) {
         return convertToDeviceItem(id, getDevicesObject().getJSONObject(id))
     }
 
+    fun getAll(): MutableList<DeviceItem> {
+        val deviceList = mutableListOf<DeviceItem>()
+        getDevicesObject().keys().forEach {
+            deviceList.add (convertToDeviceItem(it, getDevicesObject().getJSONObject(it)))
+        }
+        return deviceList
+    }
+
     fun getDeviceByIndex(index: Int): DeviceItem {
         val id = getDevicesObject().names()!!.getString(index)
         return convertToDeviceItem(id, getDevicesObject().getJSONObject(id))
@@ -40,6 +48,15 @@ class Devices constructor(context: Context) {
 
     fun idExists(id: String): Boolean {
         return getDevicesObject().has(id)
+    }
+
+    fun addressExists(address: String): Boolean {
+        getDevicesObject().keys().forEach {
+            if (getDevicesObject().getJSONObject(it).getString("address").equals(address)) {
+                return true
+            }
+        }
+        return false
     }
 
     companion object {
@@ -56,12 +73,14 @@ class Devices constructor(context: Context) {
 
     fun generateNewId(): String {
         var id = generateRandomId()
+
         while (getDevicesObject().has(id))
             id = generateRandomId()
         return id
     }
 
     fun addDevice(device: DeviceItem) {
+
         val newObject = getDevicesObject()
         val deviceObject = JSONObject()
                 .put("name", device.name)
